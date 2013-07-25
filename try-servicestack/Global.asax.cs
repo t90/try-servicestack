@@ -1,19 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.Security;
 using System.Web.SessionState;
+using Funq;
+using ServiceStack.WebHost.Endpoints;
 
 namespace try_servicestack
 {
     public class Global : System.Web.HttpApplication
     {
 
+        public class UserAppHost : AppHostBase
+        {
+            public UserAppHost() : base("User service host", typeof(UserService).Assembly){
+            }
+
+            public override void Configure(Container container)
+            {
+                Routes
+                    .Add<UserRequest>("/users","GET")
+                    .Add<UserRequest>("/users/{Email}","GET")
+                    .Add<CreateUserRequest>("/users/{Email}","POST");
+
+            }
+        }
+
         void Application_Start(object sender, EventArgs e)
         {
-            // Code that runs on application startup
-
+            new UserAppHost().Init();
         }
 
         void Application_End(object sender, EventArgs e)
