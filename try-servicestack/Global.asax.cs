@@ -7,6 +7,7 @@ using System.Web.Security;
 using System.Web.SessionState;
 using Funq;
 using ServiceStack.Common;
+using ServiceStack.Common.Web;
 using ServiceStack.ServiceHost;
 using ServiceStack.ServiceModel.Serialization;
 using ServiceStack.WebHost.Endpoints;
@@ -20,8 +21,12 @@ namespace try_servicestack
         {
             public UserAppHost() : base("User service host", typeof(UserService).Assembly)
             {
-                var config = new EndpointHostConfig();
-                config.EnableFeatures = Feature.Json;// | Feature.Html;
+                var config = new EndpointHostConfig
+                                 {
+                                     EnableFeatures = Feature.Json | Feature.Html,
+                                     DefaultContentType = ContentType.Json,
+                                     DefaultRedirectPath = "/users"
+                                 };
                 this.SetConfig(config);
                 JsonDataContractSerializer.UseSerializer(new JsonNetSerializer());
             }

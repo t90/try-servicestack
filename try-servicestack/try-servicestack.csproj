@@ -180,7 +180,7 @@
     </VisualStudio>
   </ProjectExtensions>
   <PropertyGroup>
-    <PreBuildEvent>"C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\"xsd.exe /classes $(ProjectDir)User.xsd</PreBuildEvent>
+    <PreBuildEvent>rem "C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\"xsd.exe /classes $(ProjectDir)User.xsd</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
