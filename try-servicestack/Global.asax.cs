@@ -6,6 +6,9 @@ using System.Web;
 using System.Web.Security;
 using System.Web.SessionState;
 using Funq;
+using ServiceStack.Common;
+using ServiceStack.ServiceHost;
+using ServiceStack.ServiceModel.Serialization;
 using ServiceStack.WebHost.Endpoints;
 
 namespace try_servicestack
@@ -15,7 +18,12 @@ namespace try_servicestack
 
         public class UserAppHost : AppHostBase
         {
-            public UserAppHost() : base("User service host", typeof(UserService).Assembly){
+            public UserAppHost() : base("User service host", typeof(UserService).Assembly)
+            {
+                var config = new EndpointHostConfig();
+                config.EnableFeatures = Feature.Json;// | Feature.Html;
+                this.SetConfig(config);
+                JsonDataContractSerializer.UseSerializer(new JsonNetSerializer());
             }
 
             public override void Configure(Container container)
@@ -33,29 +41,18 @@ namespace try_servicestack
 
         void Application_End(object sender, EventArgs e)
         {
-            //  Code that runs on application shutdown
-
         }
 
         void Application_Error(object sender, EventArgs e)
         {
-            // Code that runs when an unhandled error occurs
-
         }
 
         void Session_Start(object sender, EventArgs e)
         {
-            // Code that runs when a new session is started
-
         }
 
         void Session_End(object sender, EventArgs e)
         {
-            // Code that runs when a session ends. 
-            // Note: The Session_End event is raised only when the sessionstate mode
-            // is set to InProc in the Web.config file. If session mode is set to StateServer 
-            // or SQLServer, the event is not raised.
-
         }
 
     }
