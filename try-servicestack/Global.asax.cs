@@ -21,10 +21,8 @@ namespace try_servicestack
             public override void Configure(Container container)
             {
                 Routes
-                    .Add<UserRequest>("/users","GET")
-                    .Add<UserRequest>("/users/{Email}","GET")
-                    .Add<CreateUserRequest>("/users/{Email}","POST");
-
+                    .Add<UserRequest>("/users", "GET")
+                    .Add<UserRequest>("/users/{Email}", "GET");
             }
         }
 

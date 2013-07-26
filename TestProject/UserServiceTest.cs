@@ -73,7 +73,7 @@ namespace TestProject
         [TestMethod()]
         public void HasNameInFirstOrLastTest()
         {
-            UserService_Accessor target = new UserService_Accessor();
+            var target = new UserService_Accessor();
             Assert.IsTrue(target.HasNameInFirstOrLast("john", new User() { LastName = "JOHNSON" }));
             Assert.IsTrue(target.HasNameInFirstOrLast("jOhn", new User() { FirstName = "JoHn" }));
             Assert.IsFalse(target.HasNameInFirstOrLast("jOhn", new User() { FirstName = "Jo", LastName = "HN"}));
@@ -86,16 +86,18 @@ namespace TestProject
         [TestMethod()]
         public void FilterUsersByRequestFieldsTest()
         {
-            UserService target = new UserService(); // TODO: Initialize to an appropriate value
+            var target = new UserService(); 
 
             target.DataSource = new[] {
                 new User {Email = "jack@mail.com",FirstName = "jack"}, 
                 new User {Email = "k@mail.com", LastName = "Sparrow"},
-                new User {Email = "ack@mail.com", LastName = "SpaRRow"}};
+                new User {Email = "ack@mail.com", LastName = "SpaRRow"},
+                new User {FirstName = "John",LastName = "Smith",Email = "jsmith@email.com"},
+            };
 
             Assert.AreEqual(1, target.FilterUsersByRequestFields(new UserRequest(){Email = "ACK@mail.COM"}).Count()); // make sure jack@mail.com won't get there
-            Assert.AreEqual(2, target.FilterUsersByRequestFields(new UserRequest() { Name = "SparROW" }).Count()); // make sure jack@mail.com won't get there
-
+            Assert.AreEqual(2, target.FilterUsersByRequestFields(new UserRequest() { Name = "SparROW" }).Count()); 
+            Assert.AreEqual(1, target.FilterUsersByRequestFields(new UserRequest() { FirstName = "john" }).Count());
         }
     }
 }

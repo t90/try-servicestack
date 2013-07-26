@@ -6,10 +6,11 @@ using ServiceStack.ServiceHost;
 
 namespace try_servicestack
 {
-    [Route("/users*Name={Name}")]
-    public class UserRequest
+    [Route("/users*name={Name}")]
+    [Route("/users*lastname={LastName}")]
+    [Route("/users*firstname={FirstName}")]
+    public class UserRequest : User, IReturn<List<User>>
     {
         public string Name { get; set; }
-        public string Email { get; set; }
     }
 }
